@@ -8,7 +8,9 @@ cobasns.py
 templates/input_token.html
 templates/index_.html
 
-lambda/*
+lambda/layers/
+lambda/layers/*
+lambda/layers/packages
 
 # .github/workflows/deploy.yml
 
@@ -21,12 +23,16 @@ terraform/.terraform.lock.hcl
 terraform/terraform.tfstate
 terrafrom/terraform.tfstate.backup
 
-kubernetes/deploy.yaml
+terraform/techno_get.zip
+terraform/techno_post.zip
+terraform/techno_s3.zip
+
+# kubernetes/deploy.yaml
 
 deployment/deploy.yaml
 deployment/service.yaml
 
-.github/workflows/deploy.yml
+# .github/workflows/deploy.yml
 
 .env
 venv/

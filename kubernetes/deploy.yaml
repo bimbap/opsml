@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opsml
+  labels:
+    app: opsml
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: opsml
+  template:
+    metadata:
+      labels:
+        app: opsml
+    spec:
+      containers:
+      - name: opsml
+        image: 437248787701.dkr.ecr.us-east-1.amazonaws.com/techno-ecr-jakarta-ibrahim:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+          - name: AWS_ACCESS_KEY_ID
+            value: "ASIAWLTQPAT2YGXDLTP4"
+          - name: AWS_SECRET_ACCESS_KEY
+            value: "d+QXXSlR2lB1z3bvU1WMTSC2xtluy4L5Rez3iiam"
+          - name: AWS_SESSION_TOKEN
+            value: "IQoJb3JpZ2luX2VjEBYaCXVzLXdlc3QtMiJHMEUCIHALtucYm4L+ygUx8/puaXVTsojKyavIRNhlA6UC2kpyAiEAuU8QZE/uJ+bS3xgkT4D0J05zmudRrNpMDPcaESlVe8cqvAIIz///////////ARAAGgw0MzcyNDg3ODc3MDEiDGANPI4JwUilQlb5miqQAhlxtMImZCcfigUXY8KvGWsm057nTj+EDMLElKkjjl1cB38doaXRvCTMuLpDckHu2GJPF5u7VIXsFcyulZVtBMliBHDmq2GzWINEBANptVlj246upOSkHehn1fKgoHlT3blxVndsCs36ZbsMQQEofP7WeotR4sQA936DHRb2HD5u2fkCJdyYASoEv7K8P0zTkqXwSsxPbSStkKIBU3N9KXjLAQO7VsPZrC85dpLmE5rRTVt6WZaJHJnuph8fGY6IqRVHJ6HVhpnvlbojFFlmTHMjZT+V6o4Fh18SbDh2HuGm4YSw5e0oOz+qFUbMDLKn+fuUatFC0zelWgz84Bnl4MPUHDBxch13aZHRfqMb/Vo6MLL5usEGOp0B5Kg4jLNKFoISKfG3eedevZYDAgGHRgy/mQcYNTiWSU3gOvVHwCUuKO9YRhtgtJ6qDmPKYiRgKgqFClCm0j5uGMc0IDVQNbyVF6dovrz+/w+SKvx/Pfy0bDY2BFSgwD6viU6YVFJKTZJ2oGm6LQ6fKZCT8/0+fYdTCZH2VzKfnHM4OHGy1OfN8h7ntdRxR3Qe3RuRKsG8cZwzu5v7CA=="
+          - name: AWS_REGION
+            value: "us-east-1"
+          - name: ATHENA_DB
+            value: "rekognition_results_db"
+          - name: S3_STAGING_DIR
+            value: "s3://technoinput-jakarta-ibrahimm/"
+          - name: FLASK_SECRET_KEY
+            value: "lks"
+          - name: API_GATEWAY_URL
+            value: "https://p1ulgropxb.execute-api.us-east-1.amazonaws.com/prod"
+          - name: SNS_TOPIC_ARN
+            value: "arn:aws:sns:us-east-1:437248787701:techno-sns-jakarta-ibrahim"
+          - name: ATHENA_SCHEMA_NAME
+            value: "rekognition_results_db"

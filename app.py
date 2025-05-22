@@ -9,7 +9,7 @@ import boto3
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'lks')
-API_GATEWAY_URL = os.environ.get('API_GATEWAY_URL', 'your_api_gateway_url_here')
+API_GATEWAY_URL = os.environ.get('API_GATEWAY_URL', 'https://p1ulgropxb.execute-api.us-east-1.amazonaws.com/prod')
 
 # Decorator untuk route yang membutuhkan auth
 def token_required(f):
