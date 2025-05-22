@@ -1,0 +1,28 @@
+.env
+venv/
+__pycache__/
+*.pyc
+
+app.py_
+cobasns.py
+templates/input_token.html
+templates/index_.html
+
+lambda/*
+
+# .github/workflows/deploy.yml
+
+# dockerfile
+
+terraform/main.tf
+terraform/.terraform
+terraform/.terraform/*
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+
+kubernetes/deploy.yaml
+
+deployment/deploy.yaml
+deployment/service.yaml
+.env
+venv/
