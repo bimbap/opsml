@@ -9,7 +9,7 @@ import boto3
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'lks')
-API_GATEWAY_URL = os.environ.get('API_GATEWAY_URL', 'https://p1ulgropxb.execute-api.us-east-1.amazonaws.com/prod')
+API_GATEWAY_URL = os.environ.get('API_GATEWAY_URL', 'https://p1ulgropxb.execute-api.us-east-1.amazonaws.com/prod/')
 
 # Decorator untuk route yang membutuhkan auth
 def token_required(f):
@@ -76,7 +76,7 @@ def dashboard():
 
     
     conn = connect(
-        s3_staging_dir=os.environ.get("S3_STAGING_DIR", "s3://your-s3-bucket/"),
+        s3_staging_dir=os.environ.get("S3_STAGING_DIR", "s3://technoinput-jakarta-ibrahimm/"),
         aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
         aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         aws_session_token=os.environ.get("AWS_SESSION_TOKEN"),
