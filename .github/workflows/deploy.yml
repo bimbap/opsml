@@ -48,7 +48,7 @@ jobs:
         run: |
           aws eks update-kubeconfig --name ${{ secrets.CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
 
-   deploy:
+  deploy:
     name: Deploy to EKS
     runs-on: ubuntu-latest
     needs: setup
