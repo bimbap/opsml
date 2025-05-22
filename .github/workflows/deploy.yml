@@ -25,26 +25,11 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, Tag, and Push Docker Images
-        env:
-            ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-            ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
-            FLASK_SECRET_KEY: ${{ secrets.FLASK_SECRET_KEY }}
+      - name: Build, Tag, and Push Docker Image
         run: |
-            # Use commit SHA for versioning
-            SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-8)
-            # Also tag as latest
-            IMAGE_SHA="${ECR_REGISTRY}/${ECR_REPOSITORY}:${SHORT_SHA}"
-            IMAGE_LATEST="${ECR_REGISTRY}/${ECR_REPOSITORY}:latest"
-
-            echo "Building images: ${IMAGE_SHA} and ${IMAGE_LATEST}"
-
-            docker build -t $IMAGE_SHA -t $IMAGE_LATEST .
-            docker push $IMAGE_SHA
-            docker push $IMAGE_LATEST
-
-            # Save the image tag for later use
-            echo "IMAGE_TAG=${SHORT_SHA}" >> $GITHUB_ENV
+          IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${GITHUB_REF_NAME}"
+          docker build -t $IMAGE .
+          docker push $IMAGE
 
   setup:
     name: Configure kubeconfig for EKS
