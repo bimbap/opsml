@@ -19,10 +19,14 @@ terraform/.terraform
 terraform/.terraform/*
 terraform/.terraform.lock.hcl
 terraform/terraform.tfstate
+terrafrom/terraform.tfstate.backup
 
 kubernetes/deploy.yaml
 
 deployment/deploy.yaml
 deployment/service.yaml
+
+.github/workflows/deploy.yml
+
 .env
 venv/
