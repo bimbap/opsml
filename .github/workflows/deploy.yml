@@ -25,11 +25,34 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, Tag, and Push Docker Image
+      - name: Define Image Variables
         run: |
-          IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${GITHUB_REF_NAME}"
-          docker build -t ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${GITHUB_REF_NAME} .
-          docker push ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${GITHUB_REF_NAME}
+          echo "Checking ECR Repository..."
+          if [ -z "${{ env.ECR_REPOSITORY_NAME }}" ]; then
+            echo "ERROR: ECR_REPOSITORY is empty! Please check the Github Secrets."
+            exit 1
+          fi
+          IMAGE_TAG=${{ github.sha }}
+          ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
+          IMAGE_URI=$ECR_REGISTRY/$ECR_REPOSITORY_NAME:$IMAGE_TAG
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+          echo "ECR_REGISTRY=$ECR_REGISTRY" >> $GITHUB_ENV
+          echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
+
+      - name: Debug Image Variables
+        run: |
+          echo "ECR_REGISTRY: $ECR_REGISTRY"
+          echo "ECR_REPOSITORY_NAME: $ECR_REPOSITORY_NAME"
+          echo "IMAGE_TAG: $IMAGE_TAG"
+          echo "IMAGE_URI: $IMAGE_URI"
+
+      - name: Build, tag, and push image to ECR
+        id: build-image
+        run: |
+          docker build -t $IMAGE_URI .
+          docker tag $IMAGE_URI $ECR_REGISTRY/$ECR_REPOSITORY_NAME:latest
+          docker push $IMAGE_URI
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY_NAME:latest
 
   setup:
     name: Configure kubeconfig for EKS
